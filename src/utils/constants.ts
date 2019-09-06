@@ -1,0 +1,5 @@
+enum EXTENSION_CONSTANTS {
+	PROJECT_PATH_PREFIX = "@aldogroup"
+}
+
+export default EXTENSION_CONSTANTS;
