@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+const { createVSIX } = require('vsce');
+
+const VERSION = process.env.VERSION;
+
+if (!VERSION) {
+	console.error('No VERSION specified');
+}
+
+const SHOEBOX_EXT = 'shoebox-ext';
+
+const extensionBinName =
+	process.cwd() + `/packaged/${SHOEBOX_EXT}_v${VERSION}.vsix`;
+
+console.log(process.cwd() + extensionBinName);
+
+createVSIX({ useYarn: true, packagePath: extensionBinName })
+	.then(res => {
+		console.log('Extension packaged succesfully', res);
+	})
+	.catch(err => {
+		console.error('Error during extension packaging', err);
+	});

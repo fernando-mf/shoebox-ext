@@ -40,7 +40,7 @@
 		"watch": "tsc -watch -p ./",
 		"pretest": "yarn run compile",
 		"test": "node ./out/test/runTest.js",
-		"package": "vsce package -o ./packaged/shoebox-ext.v1.vsix",
+		"package": "VERSION=$npm_package_version ./scripts/package",
 		"format:staged": "pretty-quick --staged"
 	},
 	"devDependencies": {
