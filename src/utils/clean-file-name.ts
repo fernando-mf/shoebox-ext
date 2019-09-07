@@ -1,31 +1,52 @@
 import { relative } from 'path';
 
 import constants from './constants';
+import { getLastArrayIndexAndItem } from './arrray';
 
 interface IAliasMap {
 	[key: string]: string;
 }
 
 const aliasMap: IAliasMap = {
-	'packages': constants.PROJECT_PATH_PREFIX,
+	packages: constants.PROJECT_PATH_PREFIX
+};
+
+const removeBlacklistedExtensions = (str: string) => {
+	// Split file parts in tokens, last token is the extension
+	const fileParts = str.split('.');
+	const [lastToken]: string[] = getLastArrayIndexAndItem(fileParts);
+
+	if (constants.FILE_EXT_BLACKLIST.includes(`.${lastToken}`)) {
+		fileParts.pop();
+	}
+
+	return fileParts.join('.');
 };
 
 const getFileName = (filePath: string) => {
 	const relativePathTokens = relative(process.cwd(), filePath).split('/');
-	const lastIndex = relativePathTokens.length - 1;
-	const lastPathToken = relativePathTokens[lastIndex];
+	const [lastPathToken, lastIndex] = getLastArrayIndexAndItem(
+		relativePathTokens
+	);
 
-	// We only trim the path for JS files, we need the index for scss files
-	if (lastPathToken === 'index.js') {
+	const blackListedIndexes = constants.FILE_EXT_BLACKLIST.map(
+		ext => `index${ext}`
+	);
+
+	// Trim the blacklisted `index` parts
+	if (blackListedIndexes.includes(lastPathToken)) {
 		relativePathTokens.pop();
 	} else {
-		// Remove extension
-		relativePathTokens[lastIndex] = lastPathToken.replace('.js', '');
+		// Remove blacklisted extensions
+		relativePathTokens[lastIndex] = removeBlacklistedExtensions(lastPathToken);
 	}
 
 	// Apply aliases
-	const finalPathTokens = relativePathTokens.map(token => aliasMap[token] || token);
+	const finalPathTokens = relativePathTokens.map(
+		token => aliasMap[token] || token
+	);
+
 	return finalPathTokens.join('/');
-}
+};
 
 export default getFileName;
