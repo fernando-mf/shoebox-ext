@@ -7,6 +7,8 @@ interface IAliasMap {
 	[key: string]: string;
 }
 
+const ROOT = 'packages';
+
 const aliasMap: IAliasMap = {
 	packages: constants.PROJECT_PATH_PREFIX
 };
@@ -41,8 +43,11 @@ const getFileName = (filePath: string) => {
 		relativePathTokens[lastIndex] = removeBlacklistedExtensions(lastPathToken);
 	}
 
+	const rootIndex = relativePathTokens.indexOf(ROOT);
+	const relativeTokensWithoutUselessStuff = relativePathTokens.slice(rootIndex);
+
 	// Apply aliases
-	const finalPathTokens = relativePathTokens.map(
+	const finalPathTokens = relativeTokensWithoutUselessStuff.map(
 		token => aliasMap[token] || token
 	);
 

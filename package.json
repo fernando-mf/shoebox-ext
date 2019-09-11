@@ -2,7 +2,7 @@
 	"name": "shoebox-ext",
 	"displayName": "The SHOEBOX extension",
 	"description": "A collection of shoebox vscode utils",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"engines": {
 		"vscode": "^1.38.0"
 	},
