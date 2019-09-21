@@ -2,7 +2,7 @@
 	"name": "shoebox-ext",
 	"displayName": "The SHOEBOX extension",
 	"description": "A collection of shoebox vscode utils",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"engines": {
 		"vscode": "^1.38.0"
 	},
@@ -31,7 +31,17 @@
 				"key": "ctrl+shift+0",
 				"mac": "cmd+shift+0"
 			}
-		]
+		],
+		"configuration": {
+			"title": "Shoebox",
+			"properties": {
+				"shoebox.projectPrefix": {
+					"type": "string",
+					"default": "@aldogroup",
+					"description": "The project prefix will replace `packages` in the file pathname"
+				}
+			}
+		}
 	},
 	"license": "MIT",
 	"scripts": {
@@ -41,7 +51,8 @@
 		"pretest": "yarn run compile",
 		"test": "node ./out/test/runTest.js",
 		"package": "VERSION=$npm_package_version ./scripts/package",
-		"format:staged": "pretty-quick --staged"
+		"format:staged": "pretty-quick --staged",
+		"publish": "yarn package && vsce publish"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",

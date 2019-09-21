@@ -14,7 +14,19 @@ const shoeboxRelativePath = vscode.commands.registerCommand(
 			return;
 		}
 
-		const currentFileName = cleanFileName(activeTextEditor.document.fileName);
+		// Pick the PathPrefix from the workspace settings
+		const config = vscode.workspace.getConfiguration(
+			'shoebox',
+			activeTextEditor.document.uri
+		);
+
+		const projectPathPrefix = config.get('projectPrefix') as string;
+
+		// If the prefix is undefined, `cleanFileName` defaults to `@aldogroup`
+		const currentFileName = cleanFileName(
+			activeTextEditor.document.fileName,
+			projectPathPrefix
+		);
 		vscode.env.clipboard.writeText(currentFileName);
 
 		logger.log('Copied fileName to clipboard', currentFileName);

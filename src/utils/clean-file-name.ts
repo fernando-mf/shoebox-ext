@@ -9,9 +9,9 @@ interface IAliasMap {
 
 const ROOT = 'packages';
 
-const aliasMap: IAliasMap = {
-	packages: constants.PROJECT_PATH_PREFIX
-};
+const generateProjectAliasMap = (projectPrefix: string): IAliasMap => ({
+	packages: projectPrefix
+});
 
 const removeBlacklistedExtensions = (str: string) => {
 	// Split file parts in tokens, last token is the extension
@@ -25,7 +25,11 @@ const removeBlacklistedExtensions = (str: string) => {
 	return fileParts.join('.');
 };
 
-const getFileName = (filePath: string) => {
+const getFileName = (filePath: string, projectPrefix?: string) => {
+	const aliasMap = generateProjectAliasMap(
+		projectPrefix || constants.PROJECT_PATH_PREFIX
+	);
+
 	const relativePathTokens = relative(process.cwd(), filePath).split('/');
 	const [lastPathToken, lastIndex] = getLastArrayIndexAndItem(
 		relativePathTokens
