@@ -2,6 +2,7 @@ import * as vscode from 'vscode';
 
 import shoeboxRelativePath from './commands/relative-path';
 import shoeboxGreet from './commands/greet';
+import shoeboxRelativePathPicker from './commands/relative-path-picker';
 
 import * as logger from './utils/logger';
 
@@ -15,7 +16,11 @@ export function activate(context: vscode.ExtensionContext) {
 	// The commandId must match the command field in package.json
 
 	// Subscribe commands
-	context.subscriptions.push(shoeboxRelativePath, shoeboxGreet);
+	context.subscriptions.push(
+		shoeboxRelativePath,
+		shoeboxGreet,
+		shoeboxRelativePathPicker
+	);
 }
 
 // this method is called when your extension is deactivated

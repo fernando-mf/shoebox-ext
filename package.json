@@ -11,7 +11,8 @@
 	],
 	"activationEvents": [
 		"onCommand:extension.shoeboxRelativePath",
-		"onCommand:extension.shoeboxGreet"
+		"onCommand:extension.shoeboxGreet",
+		"onCommand:extension.shoeboxRelativePathPicker"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
@@ -23,6 +24,10 @@
 			{
 				"command": "extension.shoeboxGreet",
 				"title": "Shoebox: Greet"
+			},
+			{
+				"command": "extension.shoeboxRelativePathPicker",
+				"title": "Shoebox: Pick Relative Path"
 			}
 		],
 		"keybindings": [
@@ -30,6 +35,11 @@
 				"command": "extension.shoeboxRelativePath",
 				"key": "ctrl+shift+0",
 				"mac": "cmd+shift+0"
+			},
+			{
+				"command": "extension.shoeboxRelativePathPicker",
+				"key": "ctrl+shift+9",
+				"mac": "cmd+shift+9"
 			}
 		],
 		"configuration": {
@@ -58,6 +68,7 @@
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^5.2.6",
 		"@types/node": "^10.12.21",
+		"@types/ramda": "^0.26.36",
 		"@types/vscode": "^1.38.0",
 		"glob": "^7.1.4",
 		"husky": "^3.0.5",
@@ -69,7 +80,9 @@
 		"vsce": "^1.66.0",
 		"vscode-test": "^1.0.2"
 	},
-	"dependencies": {},
+	"dependencies": {
+		"ramda": "^0.26.1"
+	},
 	"publisher": "fernandomf",
 	"husky": {
 		"hooks": {

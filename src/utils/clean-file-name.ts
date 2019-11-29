@@ -2,12 +2,11 @@ import { relative } from 'path';
 
 import constants from './constants';
 import { getLastArrayIndexAndItem } from './arrray';
+import { pathArrayToRelative } from './path';
 
 interface IAliasMap {
 	[key: string]: string;
 }
-
-const ROOT = 'packages';
 
 const generateProjectAliasMap = (projectPrefix: string): IAliasMap => ({
 	packages: projectPrefix
@@ -47,8 +46,9 @@ const getFileName = (filePath: string, projectPrefix?: string) => {
 		relativePathTokens[lastIndex] = removeBlacklistedExtensions(lastPathToken);
 	}
 
-	const rootIndex = relativePathTokens.indexOf(ROOT);
-	const relativeTokensWithoutUselessStuff = relativePathTokens.slice(rootIndex);
+	const relativeTokensWithoutUselessStuff = pathArrayToRelative(
+		relativePathTokens
+	);
 
 	// Apply aliases
 	const finalPathTokens = relativeTokensWithoutUselessStuff.map(
