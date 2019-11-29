@@ -6,7 +6,7 @@ export function pathArrayToRelative(
 ) {
 	const rootIndex = pathTokens.indexOf(folderRoot);
 
-	if (rootIndex <= 0) {
+	if (rootIndex < 0) {
 		return [];
 	}
 
