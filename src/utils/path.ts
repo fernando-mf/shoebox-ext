@@ -1,5 +1,7 @@
 const ROOT = 'packages';
 
+import * as vscode from 'vscode';
+
 export function pathArrayToRelative(
 	pathTokens: string[],
 	folderRoot: string = ROOT
@@ -7,6 +9,10 @@ export function pathArrayToRelative(
 	const rootIndex = pathTokens.indexOf(folderRoot);
 
 	if (rootIndex < 0) {
+		const path = pathTokens.join('/');
+		vscode.window.showErrorMessage(
+			`Can't build path for ${path}. Root: ${folderRoot}`
+		);
 		return [];
 	}
 

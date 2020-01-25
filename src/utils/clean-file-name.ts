@@ -1,4 +1,4 @@
-import { relative } from 'path';
+import { join, relative } from 'path';
 
 import constants from './constants';
 import { getLastArrayIndexAndItem } from './arrray';
@@ -38,7 +38,7 @@ const getFileName = (
 		rootFolder
 	);
 
-	const relativePathTokens = relative(process.cwd(), filePath).split('/');
+	const relativePathTokens = relative(__dirname, filePath).split('/');
 	const [lastPathToken, lastIndex] = getLastArrayIndexAndItem(
 		relativePathTokens
 	);
