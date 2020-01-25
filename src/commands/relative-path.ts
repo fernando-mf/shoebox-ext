@@ -3,6 +3,7 @@ import * as vscode from 'vscode';
 import * as logger from '../utils/logger';
 import { COMMAND_UID } from './commands';
 import cleanFileName from '../utils/clean-file-name';
+import { getConfigParam } from '../utils/config';
 
 const shoeboxRelativePath = vscode.commands.registerCommand(
 	COMMAND_UID.RELATIVE_PATH,
@@ -14,17 +15,13 @@ const shoeboxRelativePath = vscode.commands.registerCommand(
 			return;
 		}
 
-		// Pick the PathPrefix from the workspace settings
-		const config = vscode.workspace.getConfiguration(
-			'shoebox',
-			activeTextEditor.document.uri
-		);
-
-		const projectPathPrefix = config.get('projectPrefix') as string;
+		const rootFolder = getConfigParam<string>('rootFolder')!;
+		const projectPathPrefix = getConfigParam<string>('projectPrefix')!;
 
 		// If the prefix is undefined, `cleanFileName` defaults to `@aldogroup`
 		const currentFileName = cleanFileName(
 			activeTextEditor.document.fileName,
+			rootFolder,
 			projectPathPrefix
 		);
 		vscode.env.clipboard.writeText(currentFileName);

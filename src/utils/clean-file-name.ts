@@ -8,8 +8,12 @@ interface IAliasMap {
 	[key: string]: string;
 }
 
-const generateProjectAliasMap = (projectPrefix: string): IAliasMap => ({
-	packages: projectPrefix
+// TODO: Receive alias map from editor settings
+const generateProjectAliasMap = (
+	projectPrefix: string,
+	rootFolder = 'packages'
+): IAliasMap => ({
+	[rootFolder]: projectPrefix
 });
 
 const removeBlacklistedExtensions = (str: string) => {
@@ -24,9 +28,14 @@ const removeBlacklistedExtensions = (str: string) => {
 	return fileParts.join('.');
 };
 
-const getFileName = (filePath: string, projectPrefix?: string) => {
+const getFileName = (
+	filePath: string,
+	rootFolder: string,
+	projectPrefix: string
+) => {
 	const aliasMap = generateProjectAliasMap(
-		projectPrefix || constants.PROJECT_PATH_PREFIX
+		projectPrefix || constants.PROJECT_PATH_PREFIX,
+		rootFolder
 	);
 
 	const relativePathTokens = relative(process.cwd(), filePath).split('/');
@@ -47,7 +56,8 @@ const getFileName = (filePath: string, projectPrefix?: string) => {
 	}
 
 	const relativeTokensWithoutUselessStuff = pathArrayToRelative(
-		relativePathTokens
+		relativePathTokens,
+		rootFolder
 	);
 
 	// Apply aliases

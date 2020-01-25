@@ -2,7 +2,7 @@
 	"name": "shoebox-ext",
 	"displayName": "The SHOEBOX extension",
 	"description": "A collection of shoebox vscode utils",
-	"version": "0.5.1",
+	"version": "0.5.2",
 	"engines": {
 		"vscode": "^1.38.0"
 	},
@@ -45,10 +45,20 @@
 		"configuration": {
 			"title": "Shoebox",
 			"properties": {
+				"shoebox.rootFolder": {
+					"type": "string",
+					"default": "packages",
+					"description": "The root of your project. For a lerna project it's best to choose `packages`"
+				},
 				"shoebox.projectPrefix": {
 					"type": "string",
-					"default": "@aldogroup",
-					"description": "The project prefix will replace `packages` in the file pathname"
+					"default": "@project",
+					"description": "The project prefix (alias) will replace the `root folder` in the file pathname"
+				},
+				"shoebox.filePickerGlob": {
+					"type": "string",
+					"default": "",
+					"description": "The Glob pattern used to find files within the project"
 				}
 			}
 		}
